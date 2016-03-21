@@ -1,0 +1,17 @@
+<div class="chat-message">
+    <div class="media-body">
+            <div class="media-body" ng-if="vm.message.body? true: false">
+                <big class="text-"><strong>{{vm.message.username}} :</strong></big>
+                <p ng-bind-html="vm.message.body | sanitize"></p>
+                <small class="text-muted">{{vm.message.time}}</small>
+                <br />
+                <hr />
+            </div>
+            <p style="text-align:center; padding-top: 10px" ng-if="vm.message.join? true: false">
+                <mark>{{vm.message.join}} joined</mark>
+            </p>
+            <p style="text-align:center; padding-top: 10px" ng-if="vm.message.leave? true: false">
+                <mark>{{vm.message.leave}} left</mark>
+            </p>
+    </div>
+</div>

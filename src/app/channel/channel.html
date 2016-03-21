@@ -1,0 +1,27 @@
+<div class="container-fluid" ng-show="channel.username">
+    <div class="col-md-3 chat-container">
+        <div class="channel-head row">
+            <h1>Coalition</h1>
+            <h3>{{channel.username}} {{channel.data.peopleCount}}</h3>
+        </div>
+        <div class="messages-container row">
+                <!-- <chat-message message="channel.message"></chat-message> -->
+        </div>
+        <div class="message-input row">
+            <div class="input-group input-group-lg">
+                <textarea ng-model="channel.text" ng-keyup="$event.keyCode == 13? channel.keyup($event) : ''"
+                name="name" rows="2" cols="40" class="form-control"></textarea>
+                <!-- <input type="text" class="form-control" placeholder="Search for..."> -->
+                <span class="input-group-btn">
+                    <button class="btn btn-default" type="button" ng-click="channel.sendMessage()">
+                        <span class="glyphicon glyphicon-send" aria-hidden="true"></span>
+                    </button>
+                </span>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-9 canvas-cotainer">
+        <custom-canvas></custom-canvas>
+    </div>
+</div>
+<page404 ng-show="!channel.existance"></page404>

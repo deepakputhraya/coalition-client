@@ -1,0 +1,66 @@
+html, body {
+    height: 100%;
+    min-height: 100%;
+    max-height: 100%;
+}
+
+.canvas-container {
+    height: 100vh;
+}
+
+.chat-container {
+    height: 100vh;
+    max-height: 100%;
+    background-color: transparent;
+    border-right: lightgrey 1px solid;
+    .channel-head {
+        padding-left: 10px;
+        vertical-align: baseline;
+        background-color: black;
+        position: relative;
+        min-height: 100px;
+        max-height: 30%;
+        color: white;
+    }
+
+    .messages-container {
+        position: relative;
+        min-height: 50%;
+        height: 580px;
+        max-height: 73.4%;
+        overflow-y: scroll;
+        .chat-message {
+            padding: 5px 5px 0px 5px;
+            mark {
+                padding: 13px;
+                background-color: lightblue;
+            }
+        }
+        hr {
+            margin: 0px;
+        }
+    }
+
+    .message-input {
+        background-color: lightblue;
+        position: relative;
+        display: block;
+        min-height: 62px;
+        padding-top: 5px;
+        padding-bottom: 5px;
+        textarea {
+            resize: none;
+        }
+        .input-group {
+            width: 98%;
+            padding-left: 1%;
+        }
+        .btn, .form-control {
+            border-radius: 0px;
+        }
+        .btn, .btn-default {
+            background-color: transparent;
+            border: none;
+        }
+    }
+}
