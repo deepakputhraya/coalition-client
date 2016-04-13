@@ -40,6 +40,27 @@ export class ChannelController {
                     _this.onMessageReceive(msg);
                 });
             })
+            .then((sub) => {
+                console.log(sub.id);
+                channel.previousMessages(sub.id)
+                .then(messages => {
+                    console.log(messages);
+                    _this.messages = messages;
+                    messages.forEach(function(msg) {
+                        _this.onMessageReceive(msg);
+                    });
+                });
+
+                channel.previousCanvas(sub.id)
+                .then(canvas => {
+                    console.log(canvas);
+                    _this.canvas = canvas;
+                    canvas.forEach(function(el) {
+                        channel.canvasEventHandler(el);
+                    });
+                });
+                return sub;
+            })
             .then(sub => {
                 console.log(sub.topic);
                 console.log('Subscription Id:', sub.id);
@@ -71,7 +92,7 @@ export class ChannelController {
         var el = null,
             chatMessageElement = null;
         if (message.body) {
-            message.time = this.moment().format('LLL');
+            message.time = message.time || this.moment().format('LLL');
             message.body = message.body.replace('\n', '</p><p>').replace(' ', '&nbsp;');
             message.body = ['<p>', message.body, '</p>'].join('');
         }

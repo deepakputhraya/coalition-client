@@ -1,11 +1,12 @@
 'use strict';
 
 export class ChannelService{
-    constructor($http, autobahn, routerIp) {
+    constructor($http, autobahn, routerIp, server) {
         'ngInject';
         this.http = $http;
         this.autobahn = autobahn;
         this.routerIp = routerIp;
+        this.server = server;
         this.username = null;
         this.createChannelId = null;
         this.subscriptionId = null;
@@ -25,24 +26,48 @@ export class ChannelService{
             if (_this.session) {
                 return resolve(_this.session);
             }
-            _this.http.get('http://api-coalition.herokuapp.com/user/1')
-                .then(function () {
-                    var wsuri = 'ws://' + _this.routerIp +'/ws';
-                    var connection = new _this.autobahn.Connection({
-                        url: wsuri,
-                        realm: 'realm1'
-                    });
-                    connection.onopen = function (session) {
-                        console.log('connected');
-                        _this.session = session;
-                        resolve(session);
-                    };
+            var wsuri = 'ws://' + _this.routerIp +'/ws';
+            var connection = new _this.autobahn.Connection({
+                url: wsuri,
+                realm: 'realm1'
+            });
+            connection.onopen = function (session) {
+                console.log('connected');
+                _this.session = session;
+                resolve(session);
+            };
 
-                    connection.open();
-                    console.log(connection.isConnected);
-                    connection.onclose = function() {
-                        console.log('closed!');
-                    };
+            connection.open();
+            console.log(connection.isConnected);
+            connection.onclose = function() {
+                console.log('closed!');
+            };
+        });
+    }
+
+    previousMessages(subId) {
+        var _this = this;
+        return new Promise(function (resolve, reject) {
+            _this.http.get('http://'+ _this.server +'/channel/messages/'+subId)
+                .then(function (response) {
+                    resolve(response.data.messages);
+                })
+                .catch(err => {
+                    reject(err);
+                });
+        });
+    }
+
+
+    previousCanvas(subId) {
+        var _this = this;
+        return new Promise(function (resolve, reject) {
+            _this.http.get('http://'+ _this.server +'/channel/canvas/'+subId)
+                .then(function (response) {
+                    resolve(response.data.canvas);
+                })
+                .catch(err => {
+                    reject(err);
                 });
         });
     }
